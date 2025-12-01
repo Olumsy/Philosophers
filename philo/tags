@@ -1,0 +1,46 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AR	Makefile	/^AR		:= ar rcs$/;"	m
+CC	Makefile	/^CC		:= cc$/;"	m
+CFLAGS	Makefile	/^CFLAGS	= -Wall -Wextra -Werror -lpthread -I$(HEADER_DIR) -g #-fsanitize=address$/;"	m
+HEADER_DIR	Makefile	/^HEADER_DIR	:= includes$/;"	m
+NAME	Makefile	/^NAME	 	 	:= philo$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR  	:= objs$/;"	m
+OBJ_FILES	Makefile	/^OBJ_FILES		:= $(SRC_FILES:%.c=$(OBJ_DIR)\/%.o)$/;"	m
+PHILOSOPHERS_H	includes/philosophers.h	3;"	d
+RM	Makefile	/^RM		:= rm -rf$/;"	m
+SRC_DIR	Makefile	/^SRC_DIR   	:= srcs$/;"	m
+SRC_FILES	Makefile	/^SRC_FILES		:=	main.c \\$/;"	m
+SUBDIRS	Makefile	/^SUBDIRS		:= $/;"	m
+UTILS_H	includes/utils.h	3;"	d
+current_goal	includes/philosophers.h	/^	size_t			current_goal;$/;"	m	struct:s_philo_data
+eat	srcs/philo_behaviour.c	/^static void	eat(size_t id)$/;"	f	file:
+forks	includes/philosophers.h	/^	pthread_mutex_t	*forks;$/;"	m	struct:s_philo_data
+ft_atoi	srcs/utils.c	/^int	ft_atoi(const char *str)$/;"	f
+goal	includes/philosophers.h	/^		ssize_t	goal;$/;"	m	struct:s_philo_data::s_stats
+id	includes/philosophers.h	/^    size_t			id;$/;"	m	struct:s_philo_args
+init_philo_data	srcs/philo_data.c	/^t_philo_data	*init_philo_data(void)$/;"	f
+pdata	includes/philosophers.h	/^    t_philo_data	*pdata;$/;"	m	struct:s_philo_args
+pdata_destructor	srcs/philo_data.c	/^void	pdata_destructor(t_philo_data *pdata)$/;"	f
+pdata_filler	srcs/philo_data.c	/^int	pdata_filler(char **arg, t_philo_data *pdata)$/;"	f
+philo_main	srcs/philo_behaviour.c	/^void	*philo_main(void *args)$/;"	f
+philo_n	includes/philosophers.h	/^	size_t			philo_n;$/;"	m	struct:s_philo_data
+run_on_subdirs	Makefile	/^define run_on_subdirs$/;"	m
+s_philo_args	includes/philosophers.h	/^typedef struct	s_philo_args$/;"	s
+s_philo_data	includes/philosophers.h	/^typedef struct s_philo_data$/;"	s
+s_stats	includes/philosophers.h	/^	struct	s_stats$/;"	s	struct:s_philo_data
+set_forks	srcs/philo_behaviour.c	/^static void	set_forks(pthread_mutex_t forks[], size_t id, t_philo_data pdata)$/;"	f	file:
+sleep	srcs/philo_behaviour.c	/^static void	sleep(size_t id)$/;"	f	file:
+start_philo	srcs/main.c	/^static int	start_philo(t_philo_data *pdata)$/;"	f	file:
+stats	includes/philosophers.h	/^	}	stats;$/;"	m	struct:s_philo_data	typeref:struct:s_philo_data::s_stats
+stop	includes/philosophers.h	/^	bool			stop;$/;"	m	struct:s_philo_data
+t_philo_args	includes/philosophers.h	/^}	t_philo_args;$/;"	t	typeref:struct:s_philo_args
+t_philo_data	includes/philosophers.h	/^}	t_philo_data;$/;"	t	typeref:struct:s_philo_data
+think	srcs/philo_behaviour.c	/^static void	think(size_t id)$/;"	f	file:
+time_die	includes/philosophers.h	/^		size_t	time_die;$/;"	m	struct:s_philo_data::s_stats
+time_eat	includes/philosophers.h	/^		size_t	time_eat;$/;"	m	struct:s_philo_data::s_stats
+time_sleep	includes/philosophers.h	/^		size_t	time_sleep;$/;"	m	struct:s_philo_data::s_stats

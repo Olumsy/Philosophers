@@ -1,0 +1,50 @@
+arg -> int
+
+true_goal = goal * amount
+
+create n mutex;
+
+create n threads;
+
+thread:
+		id = (int)arg[0]
+		data = (t_philo_data)arg[1]
+		f1 = forks[id]
+		f2 = forks[(id + 1) * (id + 1 != n)]
+		spawn_time = current_time
+		count = 0
+
+		lock mutex f1
+			lock mutex f2
+			is_finished(data, count) && is_alive(spawn_time, data) && eat
+				return (unlock f2, f1, 0)
+			unlock f2
+		unlock f1
+		is_alive()
+			return (0)
+		sleep
+		if !is_alive()
+			return (0)
+		think
+		recur
+		return (0)
+
+is_finished(data, count):
+	static mutex_goal
+
+	lock mutex_goal
+		data->current_goal += (count < goal/amount)
+		if data->current_goal == data->goal
+			return (unlock mutex_goal, 1)
+	unlock mutex_goal
+	return (0)
+
+is_alive(data, t):
+	static mutex_stop
+
+	lock mutex_stop
+		data->stop = (current_time - t > time_to_die)
+		if data->stop
+			return (unlock mutex_stop, 1)
+	unlock mutex_stop
+	return (0)
