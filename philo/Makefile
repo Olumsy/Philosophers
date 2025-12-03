@@ -15,7 +15,8 @@
 # ======================================================================= #
 # Compiler and Flags
 CC		:= cc
-CFLAGS	= -Wall -Wextra -Werror -lpthread -I$(HEADER_DIR) -g #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -lpthread -I$(HEADER_DIR) \
+			-g3 -O2 -fsanitize=address -fsanitize=undefined
 RM		:= rm -rf
 AR		:= ar rcs
 
@@ -31,6 +32,7 @@ SRC_FILES		:=	main.c \
 					philo_data.c \
 					philo_behaviour.c \
 					utils.c \
+					actions.c
 					
 OBJ_FILES		:= $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 
