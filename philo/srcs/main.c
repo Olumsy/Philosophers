@@ -3,21 +3,21 @@
 
 static int	start_philo(t_philo_data *pdata)
 {
-	int n = pdata->stats.philo_n;
-    pthread_t *threads = malloc(sizeof(pthread_t) * n);
-    if (!threads)
-        return (1);
+	int	i;
+	int	n;
 
-    for (int i = 0; i < n; ++i)
-	{
-        pthread_create(&threads[i], NULL, philo_main, (void *)pdata);
-	}
+	n = pdata->stats.philo_n;
+	pthread_t *threads = malloc(sizeof(pthread_t) * n);
+	if (!threads)
+		return (1);
+	i = 0;
+	while (i < n)
+		pthread_create(&threads[i++], NULL, philo_main, (void *)pdata);
 	monitor(pdata);
-    for (int i = 0; i < n; ++i)
-	{
-        pthread_join(threads[i], NULL);
-	}
-    free(threads);
+	i = 0;
+	while (i < n)
+		pthread_join(threads[i++], NULL);
+	free(threads);
 	return (0);
 }
 
@@ -36,5 +36,5 @@ int	main(int argc, char **argv)
 //	for (int i = 0; (size_t)i < pdata->stats.philo_n; i++)
 //		printf("> &pdata->forks[%d], %p\n", i, &pdata->forks[i]);
 	start_philo(pdata);
-return (pdata_destructor(pdata), 0);
+	return (pdata_destructor(pdata), 0);
 }

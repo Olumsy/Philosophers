@@ -1,7 +1,7 @@
 
 #include "philosophers.h"
 
-static void	set_forks(pthread_mutex_t *forks[], size_t id, t_philo_data *pdata)
+static int	set_forks(pthread_mutex_t *forks[], size_t id, t_philo_data *pdata)
 {
 	forks[0] = &pdata->forks[id];
 	if (id < (size_t)(pdata->stats.philo_n - 1))
@@ -11,7 +11,7 @@ static void	set_forks(pthread_mutex_t *forks[], size_t id, t_philo_data *pdata)
 		forks[1] = forks[0];
 		forks[0] = &pdata->forks[0];
 	}
-//	printf("> %ld, forks{%p, %p}\n", id, forks[0], forks[1]);
+	return ((forks[0] == forks[1]));
 }
 
 static int	get_id()
@@ -20,40 +20,37 @@ static int	get_id()
 	return (i++);
 }
 
-void	monitor(t_philo_data *pdata)
+static void	wait_start(size_t id, t_philo_data *pdata)
 {
-	size_t	i;
-
-	i = 0;
-	printf("yo\n");
-	while (1)
-	{
-		//printf("> %ld, %ld ate at %ld\n", get_time_ms(), i, pdata->times[i]);
-		if (pdata->times[i] && pdata->times[i] < (long)(get_time_us() - (pdata->stats.time_die * 1000)))
-			printf("y a un mort la %ld\n", get_time_ms() - pdata->times[i]);
-		if (i++ == pdata->stats.philo_n)
-			i = 0;
-	}
+	pthread_mutex_lock(&pdata->times_mutex[id]);
+	pdata->times[id] = get_time_us();
+	pthread_mutex_unlock(&pdata->times_mutex[id]);
+	pthread_mutex_lock(pdata->start);
+	pthread_mutex_unlock(pdata->start);
+	pthread_mutex_lock(&pdata->times_mutex[id]);
+	pdata->times[id] = get_time_us();
+	pthread_mutex_unlock(&pdata->times_mutex[id]);
 }
 
 void	*philo_main(void *args)
 {
-	long				stime;
 	ssize_t				count;
 	pthread_mutex_t		*forks[2];	
 	const size_t		id = get_id();
 	const t_philo_data	*pdata = (t_philo_data *) args;
 
-	stime = get_time_ms();
-	(void)stime;
+	wait_start(id, (t_philo_data *) pdata);
 	count = 0;
-	set_forks(forks, id, (t_philo_data *) pdata);
+	if (set_forks(forks, id, (t_philo_data *) pdata))
+		return (0);
 	while (count < pdata->stats.goal * 2 - 1 || pdata->stats.goal == -1)
 	{
 		if (pdata->actions[count % 2](id, forks, (t_philo_data *)pdata))
-			printf("dead\n");
-		stime = get_time_ms();
+			break ;
 		count++;
 	}
+	pthread_mutex_lock(&pdata->times_mutex[id]);
+	pdata->times[id] = 0;
+	pthread_mutex_unlock(&pdata->times_mutex[id]);
 	return (0);
 }

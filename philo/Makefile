@@ -32,6 +32,7 @@ SRC_FILES		:=	main.c \
 					philo_data.c \
 					philo_behaviour.c \
 					utils.c \
+					monitor.c \
 					actions.c
 					
 OBJ_FILES		:= $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)

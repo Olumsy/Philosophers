@@ -11,8 +11,11 @@ static int	act_eat(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	if (is_dead(pdata))
 		return (pthread_mutex_unlock(forks[0]), \
 		pthread_mutex_unlock(forks[1]), 1);
+	pthread_mutex_lock(&pdata->times_mutex[id]);
 	pdata->times[id] = t_start;
-	printf("%ld %ld is eating\n", (get_time_ms() - pdata->start_time), id);
+	pthread_mutex_unlock(&pdata->times_mutex[id]);
+	printf("%ld %ld is eating\n", (get_time_us() - pdata->start_time) \
+	/ 1000, id + 1);
 	psleep(t_start, pdata->stats.time_eat * 1000, \
 	(pdata->stats.time_eat / 100) * P);
 	pthread_mutex_unlock(forks[0]);
@@ -28,12 +31,14 @@ static int	act_sleep(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	if (is_dead(pdata))
 		return (1);
 	t_start = get_time_us();
-	printf("%ld %ld is sleeping\n", get_time_ms() - pdata->start_time, id);
+	printf("%ld %ld is sleeping\n", (get_time_us() - pdata->start_time) \
+	/ 1000, id + 1);
 	psleep(t_start, pdata->stats.time_sleep * 1000, \
 	(pdata->stats.time_sleep /100) * P);
 	if (is_dead(pdata))
 		return (1);
-	printf("%ld %ld is thinking\n", get_time_ms() - pdata->start_time, id);
+	printf("%ld %ld is thinking\n", (get_time_us() - pdata->start_time) \
+	/ 1000, id + 1);
 	return (0);
 }
 
@@ -42,7 +47,7 @@ static int	act_think(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	(void) forks;
 	if (is_dead(pdata))
 		return (1);
-	printf("%ld %ld is thinking\n", get_time_ms() - pdata->start_time, id);
+	printf("%ld %ld is thinking\n", (get_time_ms() - pdata->start_time) / 1000, id);
 	return (0);
 }
 

@@ -9,6 +9,7 @@ t_philo_data	*init_philo_data(void)
 	if (!pdata)
 		return (NULL);
 	pdata->forks = NULL;
+	pdata->times_mutex = NULL;
 	pdata->times = NULL;
 	pdata->death_mutex = NULL;
 	ft_memset(pdata->actions, 0, sizeof(pdata->actions));
@@ -23,31 +24,46 @@ t_philo_data	*init_philo_data(void)
 	return (pdata);
 }
 
-int	pdata_filler(char **arg, t_philo_data *pdata)
+static int	mutex_farm(pthread_mutex_t **m, size_t n)
 {
 	int	i;
 
-	pdata->stats.philo_n = ft_atoi(arg[1]);
-	pdata->start_time = get_time_ms();
-	pdata->stats.time_die = ft_atoi(arg[2]);
-	pdata->stats.time_eat = ft_atoi(arg[3]);
-	pdata->stats.time_sleep = ft_atoi(arg[4]);
-	if (arg[5])
-		pdata->stats.goal = ft_atoi(arg[5]);
-	pdata->forks = malloc(sizeof(pthread_mutex_t) * pdata->stats.philo_n);
-	if (pdata->forks == NULL)
-		return (pdata_destructor(pdata), 1);
+	if (!n)
+		return (1);
+	*m = malloc(sizeof(pthread_mutex_t) * n);
+	if (*m == NULL)
+		return (1);
 	i = 0;
-	while ((size_t) i < pdata->stats.philo_n)
-		pthread_mutex_init(&pdata->forks[i++], NULL);
-	pdata->death_mutex = malloc(sizeof(pthread_mutex_t) * 1);
-	if (!pdata->death_mutex)
-		return (pdata_destructor(pdata), 1);
-	pdata->times = malloc(sizeof(long) * pdata->stats.philo_n);
-	if (pdata->times == NULL)
-		return (pdata_destructor(pdata), 1);
-	ft_memset(pdata->times, 0, sizeof(pdata->times) * pdata->stats.philo_n);
-	pthread_mutex_init(pdata->death_mutex, NULL);
+	while ((size_t) i < n)
+		pthread_mutex_init(&((*m)[i++]), NULL);
+	return (0);
+}
+
+int	pdata_filler(char **arg, t_philo_data *pdata)
+{
+	{
+		pdata->stats.philo_n = ft_atoi(arg[1]);
+		pdata->start_time = get_time_us();
+		pdata->stats.time_die = ft_atoi(arg[2]);
+		pdata->stats.time_eat = ft_atoi(arg[3]);
+		pdata->stats.time_sleep = ft_atoi(arg[4]);
+		if (arg[5])
+			pdata->stats.goal = ft_atoi(arg[5]);
+	}
+	{
+		if (mutex_farm(&pdata->forks, pdata->stats.philo_n) || \
+				mutex_farm(&pdata->times_mutex, pdata->stats.philo_n) || \
+				mutex_farm(&pdata->death_mutex, 1) || \
+				mutex_farm(&pdata->start, 1))
+			return (pdata_destructor(pdata), 1);
+	}
+	pthread_mutex_lock(pdata->start);
+	{
+		pdata->times = malloc(sizeof(long) * pdata->stats.philo_n);
+		if (pdata->times == NULL)
+			return (pdata_destructor(pdata), 1);
+		ft_memset(pdata->times, 0, sizeof(long) * pdata->stats.philo_n);
+	}
 	actions_arr(pdata->actions);
 	return (0);
 }
@@ -70,6 +86,16 @@ void	pdata_destructor(t_philo_data *pdata)
 	{
 		free(pdata->times);
 		pdata->times = NULL;
+	}
+	if (pdata->times_mutex)
+	{
+		free(pdata->times_mutex);
+		pdata->times_mutex = NULL;
+	}
+	if (pdata->start)
+	{
+		free(pdata->start);
+		pdata->start = NULL;
 	}
 	free(pdata);
 }
