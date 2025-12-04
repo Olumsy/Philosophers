@@ -6,7 +6,7 @@
 #    By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 14:50:49 by lspiteri          #+#    #+#              #
-#    Updated: 2025/06/18 20:19:56 by lspiteri         ###   ########.fr        #
+#    Updated: 2025/12/04 20:26:02 by lspiteri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 # ======================================================================= #
 # Compiler and Flags
 CC		:= cc
-CFLAGS	=	-Wall -Wextra -Werror -lpthread -I$(HEADER_DIR) \
+CFLAGS	=	-Wall -Wextra -Werror -I$(HEADER_DIR) \
 			-g3 -O2 -fsanitize=address -fsanitize=undefined
 RM		:= rm -rf
 AR		:= ar rcs
@@ -51,7 +51,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ_DIR) $(OBJ_FILES)
 			$(call run_on_subdirs,all)
 			@echo "Creating $(NAME)\n"
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES)
+			$(CC) $(CFLAGS) -lpthread -o $(NAME) $(OBJ_FILES)
 
 # Compilation of source files to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

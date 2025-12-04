@@ -60,12 +60,13 @@ void	psleep(long t_start, long t, long p)
 
 	now = get_time_us();
 	end = t_start + t;
-	p = p || 100;
-	while (now < end - (p - 10))
+	if (!p)
+		p = 10;
+	while (now < end - (p - 1))
 	{
 		remain = end - now;
 		if (remain > p)
-			usleep(remain * 0.9);
+			usleep(remain * 0.92);
 		else
 			usleep((p));
 		now = get_time_us();
