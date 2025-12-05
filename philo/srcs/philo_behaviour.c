@@ -30,6 +30,7 @@ static void	wait_start(size_t id, t_philo_data *pdata)
 	pthread_mutex_lock(&pdata->times_mutex[id]);
 	pdata->times[id] = get_time_us();
 	pthread_mutex_unlock(&pdata->times_mutex[id]);
+	usleep(1000 * (id % 2));
 }
 
 void	*philo_main(void *args)

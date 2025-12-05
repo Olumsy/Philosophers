@@ -14,8 +14,10 @@ static int	act_eat(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	pthread_mutex_lock(&pdata->times_mutex[id]);
 	pdata->times[id] = t_start;
 	pthread_mutex_unlock(&pdata->times_mutex[id]);
+	pthread_mutex_lock(pdata->print);
 	printf("%ld %ld is eating\n", (get_time_us() - pdata->start_time) \
 	/ 1000, id + 1);
+	pthread_mutex_unlock(pdata->print);
 	psleep(t_start, pdata->stats.time_eat * 1000, \
 	(pdata->stats.time_eat / 100) * P);
 	pthread_mutex_unlock(forks[0]);
@@ -31,14 +33,18 @@ static int	act_sleep(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	if (is_dead(pdata))
 		return (1);
 	t_start = get_time_us();
+	pthread_mutex_lock(pdata->print);
 	printf("%ld %ld is sleeping\n", (get_time_us() - pdata->start_time) \
 	/ 1000, id + 1);
+	pthread_mutex_unlock(pdata->print);
 	psleep(t_start, pdata->stats.time_sleep * 1000, \
 	(pdata->stats.time_sleep /100) * P);
 	if (is_dead(pdata))
 		return (1);
+	pthread_mutex_lock(pdata->print);
 	printf("%ld %ld is thinking\n", (get_time_us() - pdata->start_time) \
 	/ 1000, id + 1);
+	pthread_mutex_unlock(pdata->print);
 	return (0);
 }
 

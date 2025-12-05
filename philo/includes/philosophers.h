@@ -19,13 +19,14 @@ typedef struct s_philo_data
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*times_mutex;
+	pthread_mutex_t	*print;
 	long			*times;
 	t_action		actions[4];
 	size_t			current_goal;
 	pthread_mutex_t	*death_mutex;
 	bool			death_bool;
-	long			start_time;
 	pthread_mutex_t	*start;
+	long			start_time;
 	struct	s_stats
 	{
 		size_t	philo_n;

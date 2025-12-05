@@ -17,6 +17,7 @@ t_philo_data	*init_philo_data(void)
 	pdata->stats.goal = -1;
 	pdata->current_goal = 0;
 	pdata->death_bool = 0;
+	pdata->print = 0;
 	pdata->start_time = 0;
 	pdata->stats.time_die = 0;
 	pdata->stats.time_eat = 0;
@@ -54,6 +55,7 @@ int	pdata_filler(char **arg, t_philo_data *pdata)
 		if (mutex_farm(&pdata->forks, pdata->stats.philo_n) || \
 				mutex_farm(&pdata->times_mutex, pdata->stats.philo_n) || \
 				mutex_farm(&pdata->death_mutex, 1) || \
+				mutex_farm(&pdata->print, 1) || \
 				mutex_farm(&pdata->start, 1))
 			return (pdata_destructor(pdata), 1);
 	}
@@ -91,6 +93,11 @@ void	pdata_destructor(t_philo_data *pdata)
 	{
 		free(pdata->times_mutex);
 		pdata->times_mutex = NULL;
+	}
+	if (pdata->print)
+	{
+		free(pdata->print);
+		pdata->print = NULL;
 	}
 	if (pdata->start)
 	{
