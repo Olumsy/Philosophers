@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_behaviour.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 15:55:28 by lspiteri          #+#    #+#             */
+/*   Updated: 2025/12/06 20:10:39 by lspiteri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philosophers.h"
 
@@ -15,9 +26,10 @@ static int	set_forks(pthread_mutex_t *forks[], size_t id, t_philo_data *pdata)
 }
 
 static int	get_id()
-{
-	static int i = 0;
-	return (i++);
+{ 
+	static int				id = -1;
+	id++;
+	return (id);
 }
 
 static void	wait_start(size_t id, t_philo_data *pdata)
@@ -35,11 +47,15 @@ static void	wait_start(size_t id, t_philo_data *pdata)
 
 void	*philo_main(void *args)
 {
-	ssize_t				count;
-	pthread_mutex_t		*forks[2];	
-	const size_t		id = get_id();
-	const t_philo_data	*pdata = (t_philo_data *) args;
+	ssize_t					count;
+	pthread_mutex_t			*forks[2];	
+	static pthread_mutex_t	id_mutex = PTHREAD_MUTEX_INITIALIZER;
+	size_t					id;
+	const t_philo_data		*pdata = (t_philo_data *) args;
 
+	pthread_mutex_lock(&id_mutex);
+	size_t					id;
+	pthread_mutex_unlock(&id_mutex);
 	wait_start(id, (t_philo_data *) pdata);
 	count = 0;
 	if (set_forks(forks, id, (t_philo_data *) pdata))

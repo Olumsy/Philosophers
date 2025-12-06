@@ -6,7 +6,7 @@
 #    By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 14:50:49 by lspiteri          #+#    #+#              #
-#    Updated: 2025/12/04 20:26:02 by lspiteri         ###   ########.fr        #
+#    Updated: 2025/12/06 18:36:46 by lspiteri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 # Compiler and Flags
 CC		:= cc
 CFLAGS	=	-Wall -Wextra -Werror -I$(HEADER_DIR) \
-			-g3 -O2 -fsanitize=address -fsanitize=undefined
+			-g3 -O2
 RM		:= rm -rf
 AR		:= ar rcs
 

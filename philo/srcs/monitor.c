@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 15:55:16 by lspiteri          #+#    #+#             */
+/*   Updated: 2025/12/06 18:41:53 by lspiteri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philosophers.h"
 
@@ -48,5 +59,7 @@ void	monitor(t_philo_data *pdata)
 			usleep(500);
 		}
 	}
+	pthread_mutex_lock(pdata->print);
 	printf("%ld %ld died\n", (get_time_us() - pdata->start_time) / 1000, i + 1);
+	pthread_mutex_unlock(pdata->print);
 }

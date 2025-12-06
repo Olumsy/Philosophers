@@ -17,16 +17,16 @@ typedef int (*t_action)(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata
 
 typedef struct s_philo_data
 {
+	size_t			current_goal;
+	long			*times;
+	long			start_time;
+	bool			death_bool;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*times_mutex;
 	pthread_mutex_t	*print;
-	long			*times;
 	t_action		actions[4];
-	size_t			current_goal;
 	pthread_mutex_t	*death_mutex;
-	bool			death_bool;
 	pthread_mutex_t	*start;
-	long			start_time;
 	struct	s_stats
 	{
 		size_t	philo_n;
