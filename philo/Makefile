@@ -6,7 +6,7 @@
 #    By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 14:50:49 by lspiteri          #+#    #+#              #
-#    Updated: 2025/12/06 18:36:46 by lspiteri         ###   ########.fr        #
+#    Updated: 2025/12/09 23:12:11 by lspiteri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC_FILES		:=	main.c \
 					philo_behaviour.c \
 					utils.c \
 					monitor.c \
+					parsing.c \
 					actions.c
 					
 OBJ_FILES		:= $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)

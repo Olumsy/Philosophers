@@ -44,5 +44,6 @@ void			*philo_main(void *args);
 void			monitor(t_philo_data *pdata);
 void			actions_arr(t_action actions[]);
 int 			is_dead(t_philo_data *pdata);
+int				parsing(t_philo_data *pdata);
 
 #endif

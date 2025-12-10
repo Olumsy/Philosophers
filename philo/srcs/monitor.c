@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:16 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/06 18:41:53 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 19:38:05 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	monitor(t_philo_data *pdata)
 			(pdata->stats.time_die * 1000)))
 		{
 			set_death(pdata);
+			usleep(1500);
 			break ;
 		}
-		finished = t == 0;
+		finished = (t == 0);
 		if (++i == pdata->stats.philo_n)
 		{
 			if (finished == 1)
 				return ;
-			finished = 1;
 			i = 0;
 			usleep(500);
 		}

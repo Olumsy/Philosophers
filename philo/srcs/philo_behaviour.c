@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:28 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/06 20:10:39 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:17:23 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	*philo_main(void *args)
 	const t_philo_data		*pdata = (t_philo_data *) args;
 
 	pthread_mutex_lock(&id_mutex);
-	size_t					id;
+	id = get_id();
 	pthread_mutex_unlock(&id_mutex);
 	wait_start(id, (t_philo_data *) pdata);
 	count = 0;
 	if (set_forks(forks, id, (t_philo_data *) pdata))
 		return (0);
-	while (count < pdata->stats.goal * 2 - 1 || pdata->stats.goal == -1)
+	while (count < pdata->stats.goal * 2-  1 || pdata->stats.goal == -1)
 	{
 		if (pdata->actions[count % 2](id, forks, (t_philo_data *)pdata))
 			break ;

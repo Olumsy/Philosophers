@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:36 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/06 15:55:38 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 20:22:02 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi(const char *str)
 	if (str && (str[i] == '-' || str[i] == '+'))
 	{
 		if (str[i] == '-')
-			sign = -sign;
+			return (0);
 		i++;
 	}
 	while (str && (str[i] >= '0' && str[i] <= '9'))
@@ -46,7 +46,7 @@ long	get_time_us(void)
 
 long	get_time_ms(void)
 {
-    return (get_time_us() / 1000);
+	return (get_time_us() / 1000);
 }
 
 void	*ft_memset(void *b0, int c, size_t len)

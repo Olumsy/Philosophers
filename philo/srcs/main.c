@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:09 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/06 19:44:04 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/09 23:09:45 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int	main(int argc, char **argv)
 		time_to_eat time_to_sleep \
 		[number_of_times_each_philosopher_must_eat]"), 1);
 	pdata = init_philo_data();
-	if (pdata_filler(argv, pdata))
+	if (pdata_filler(argv, pdata) || parsing(pdata))
 		return (pdata_destructor(pdata), 1);
-//	for (int i = 0; (size_t)i < pdata->stats.philo_n; i++)
-//		printf("> &pdata->forks[%d], %p\n", i, &pdata->forks[i]);
 	start_philo(pdata);
 	return (pdata_destructor(pdata), 0);
 }
