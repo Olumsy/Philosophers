@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:03 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/10 21:35:15 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 22:08:40 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	take_forks(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 {
-	pthread_mutex_lock(forks[0]); // print for each fork ... fork it
+	pthread_mutex_lock(forks[0]);
 	pthread_mutex_lock(pdata->print);
 	if (is_dead(pdata))
 		return (pthread_mutex_unlock(forks[0]), \
@@ -72,7 +72,7 @@ static int	act_sleep(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata)
 	/ 1000, id + 1);
 	pthread_mutex_unlock(pdata->print);
 	psleep(t_start, pdata->stats.time_sleep * 1000, \
-	(pdata->stats.time_sleep /100) * P);
+	(pdata->stats.time_sleep / 100) * P);
 	pthread_mutex_lock(pdata->print);
 	if (is_dead(pdata))
 		return (pthread_mutex_unlock(pdata->print), 1);
@@ -90,12 +90,12 @@ void	actions_arr(t_action actions[])
 	actions[2] = NULL;
 }
 
-int is_dead(t_philo_data *pdata)
+int	is_dead(t_philo_data *pdata)
 {
 	int	ret;
 
 	pthread_mutex_lock(pdata->death_mutex);
-		ret = pdata->death_bool;
+	ret = pdata->death_bool;
 	pthread_mutex_unlock(pdata->death_mutex);
 	return (ret);
 }

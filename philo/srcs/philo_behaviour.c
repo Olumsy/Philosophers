@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:28 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/08 16:17:23 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 22:10:07 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static int	set_forks(pthread_mutex_t *forks[], size_t id, t_philo_data *pdata)
 	return ((forks[0] == forks[1]));
 }
 
-static int	get_id()
-{ 
-	static int				id = -1;
+static int	get_id(void)
+{
+	static int	id = -1;
+
 	id++;
 	return (id);
 }
@@ -60,7 +61,7 @@ void	*philo_main(void *args)
 	count = 0;
 	if (set_forks(forks, id, (t_philo_data *) pdata))
 		return (0);
-	while (count < pdata->stats.goal * 2-  1 || pdata->stats.goal == -1)
+	while (count < pdata->stats.goal * 2 - 1 || pdata->stats.goal == -1)
 	{
 		if (pdata->actions[count % 2](id, forks, (t_philo_data *)pdata))
 			break ;

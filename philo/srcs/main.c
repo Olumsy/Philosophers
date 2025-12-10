@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:55:09 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/09 23:09:45 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 22:11:11 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 static int	start_philo(t_philo_data *pdata)
 {
-	int	i;
-	int	n;
+	int			i;
+	int			n;
+	pthread_t	*threads;
 
 	n = pdata->stats.philo_n;
-	pthread_t *threads = malloc(sizeof(pthread_t) * n);
+	threads = malloc(sizeof(pthread_t) * n);
 	if (!threads)
 		return (1);
 	i = 0;

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/10 22:35:32 by lspiteri          #+#    #+#             */
+/*   Updated: 2025/12/10 22:42:28 by lspiteri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
@@ -11,9 +22,9 @@
 # include <sys/time.h>
 # include "utils.h"
 
-typedef struct	s_philo_data t_philo_data;
-
-typedef int (*t_action)(size_t id, pthread_mutex_t *forks[], t_philo_data *pdata);
+typedef struct s_philo_data	t_philo_data;
+typedef int					(*t_action)(size_t id, \
+	pthread_mutex_t *forks[], t_philo_data *pdata);
 
 typedef struct s_philo_data
 {
@@ -43,7 +54,7 @@ void			pdata_destructor(t_philo_data *pdata);
 void			*philo_main(void *args);
 void			monitor(t_philo_data *pdata);
 void			actions_arr(t_action actions[]);
-int 			is_dead(t_philo_data *pdata);
+int				is_dead(t_philo_data *pdata);
 int				parsing(t_philo_data *pdata);
 
 #endif

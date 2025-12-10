@@ -6,7 +6,7 @@
 /*   By: lspiteri <lspiteri@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:54:52 by lspiteri          #+#    #+#             */
-/*   Updated: 2025/12/10 21:09:29 by lspiteri         ###   ########.fr       */
+/*   Updated: 2025/12/10 21:42:09 by lspiteri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	mutex_destroy(pthread_mutex_t *m, int n)
 
 void	pdata_destructor(t_philo_data *pdata)
 {
-	 // destroy all mutex with pthread_mutex_destroy() MUTEXI DELENDA SUNT
 	if (!pdata)
 		return ;
 	mutex_destroy(pdata->forks, pdata->stats.philo_n);
